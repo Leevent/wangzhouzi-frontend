@@ -1,4 +1,4 @@
- // src/lib/ghost.ts
+// src/lib/ghost.ts
 import GhostContentAPI from '@tryghost/content-api';
 
 // 建立 Ghost API 連接
@@ -30,6 +30,15 @@ export interface Resource {
     slug: string;
   };
   feature_image?: string;
+}
+
+// 分類類型定義
+export interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  count: number;
 }
 
 // Ghost 服務類別
@@ -86,7 +95,7 @@ export class GhostService {
   }
 
   // 獲取所有分類標籤
-  static async getAllCategories() {
+  static async getAllCategories(): Promise<Category[]> {
     try {
       const tags = await api.tags.browse({
         limit: 'all',

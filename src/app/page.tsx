@@ -1,6 +1,6 @@
 // src/app/page.tsx
 import { Metadata } from 'next';
-import { GhostService, Resource } from '@/lib/ghost';
+import { GhostService, Resource, Category } from '@/lib/ghost';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -187,7 +187,7 @@ export default async function HomePage() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allCategories.map((category) => {
+              {allCategories.map((category: Category) => {
                 const config = categoryConfig[category.name] || categoryConfig['預設'];
                 
                 return (

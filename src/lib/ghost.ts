@@ -1,4 +1,3 @@
-// src/lib/ghost.ts
 import GhostContentAPI from '@tryghost/content-api';
 
 // 建立 Ghost API 連接
@@ -30,6 +29,7 @@ export interface Resource {
     slug: string;
   };
   feature_image?: string;
+  reading_time?: number;
 }
 
 // 分類類型定義
@@ -43,13 +43,13 @@ export interface Category {
 
 // Ghost 服務類別
 export class GhostService {
-  // 獲取所有文章（資源）
+  // 獲取所有文章（資源）- 排除部落格文章
   static async getAllResources(): Promise<Resource[]> {
     try {
       const posts = await api.posts.browse({
         limit: 'all',
-        include: 'tags',
-        filter: 'visibility:public',
+        include: 'tags,reading_time',
+        filter: 'visibility:public+tag:-blog',
         order: 'published_at DESC'
       });
       
@@ -60,12 +60,29 @@ export class GhostService {
     }
   }
 
+  // 獲取所有部落格文章
+  static async getAllBlogPosts(): Promise<Resource[]> {
+    try {
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags,reading_time',
+        filter: 'visibility:public+tag:blog',
+        order: 'published_at DESC'
+      });
+      
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      return [];
+    }
+  }
+
   // 根據分類獲取資源
   static async getResourcesByCategory(categorySlug: string): Promise<Resource[]> {
     try {
       const posts = await api.posts.browse({
         limit: 'all',
-        include: 'tags',
+        include: 'tags,reading_time',
         filter: `tag:${categorySlug}+visibility:public`,
         order: 'published_at DESC'
       });
@@ -82,8 +99,8 @@ export class GhostService {
     try {
       const posts = await api.posts.browse({
         limit,
-        include: 'tags',
-        filter: 'featured:true+visibility:public',
+        include: 'tags,reading_time',
+        filter: 'featured:true+tag:-blog+visibility:public',
         order: 'published_at DESC'
       });
       
@@ -99,7 +116,7 @@ export class GhostService {
     try {
       const tags = await api.tags.browse({
         limit: 'all',
-        filter: 'visibility:public',
+        filter: 'visibility:public+slug:-blog',
         order: 'name ASC'
       });
       
@@ -121,7 +138,7 @@ export class GhostService {
     try {
       const posts = await api.posts.browse({
         limit: 'all',
-        include: 'tags',
+        include: 'tags,reading_time',
         filter: `title:~'${query}',excerpt:~'${query}'+visibility:public`,
         order: 'published_at DESC'
       });
@@ -138,7 +155,7 @@ export class GhostService {
     try {
       const post = await api.posts.read(
         { slug },
-        { include: 'tags' }
+        { include: 'tags,reading_time' }
       );
       
       return post as Resource;

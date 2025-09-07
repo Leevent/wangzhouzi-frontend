@@ -10,12 +10,33 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  // 從 Ghost 獲取資料
-  const [featuredResources, allCategories, allResources] = await Promise.all([
-    GhostService.getFeaturedResources(3),
-    GhostService.getAllCategories(),
-    GhostService.getAllResources()
-  ]);
+  // 從 Ghost 獲取資料，使用個別的 try-catch 確保穩定性
+  let featuredResources: Resource[] = [];
+  let allCategories: Category[] = [];
+  let allResources: Resource[] = [];
+  
+  try {
+    [featuredResources, allCategories, allResources] = await Promise.all([
+      GhostService.getFeaturedResources(3).catch(err => {
+        console.error('Error fetching featured resources:', err);
+        return [];
+      }),
+      GhostService.getAllCategories().catch(err => {
+        console.error('Error fetching categories:', err);
+        return [];
+      }),
+      GhostService.getAllResources().catch(err => {
+        console.error('Error fetching all resources:', err);
+        return [];
+      })
+    ]);
+  } catch (error) {
+    console.error('Critical error in HomePage data fetching:', error);
+    // 提供完全的後備數據
+    featuredResources = [];
+    allCategories = [];
+    allResources = [];
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

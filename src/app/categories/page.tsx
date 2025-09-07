@@ -9,7 +9,14 @@ export const metadata: Metadata = {
 };
 
 export default async function CategoriesPage() {
-  const allCategories = await GhostService.getAllCategories();
+  let allCategories: Category[] = [];
+  
+  try {
+    allCategories = await GhostService.getAllCategories();
+  } catch (error) {
+    console.error('Critical error in CategoriesPage data fetching:', error);
+    allCategories = [];
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

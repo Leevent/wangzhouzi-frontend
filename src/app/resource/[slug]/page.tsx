@@ -11,23 +11,38 @@ interface ResourcePageProps {
 }
 
 export async function generateMetadata({ params }: ResourcePageProps): Promise<Metadata> {
-  const resource = await GhostService.getResourceBySlug(params.slug);
-  
-  if (!resource) {
+  try {
+    const resource = await GhostService.getResourceBySlug(params.slug);
+    
+    if (!resource) {
+      return {
+        title: '資源不存在 - 望周知',
+        description: '您所查找的資源不存在'
+      };
+    }
+
     return {
-      title: '資源不存在 - 望周知',
-      description: '您所查找的資源不存在'
+      title: `${resource.title} - 望周知`,
+      description: resource.excerpt || '台灣優質資源',
+    };
+  } catch (error) {
+    console.error('Error generating metadata for resource:', error);
+    return {
+      title: '資源載入中 - 望周知',
+      description: '正在載入資源資訊'
     };
   }
-
-  return {
-    title: `${resource.title} - 望周知`,
-    description: resource.excerpt,
-  };
 }
 
 export default async function ResourceDetailPage({ params }: ResourcePageProps) {
-  const resource = await GhostService.getResourceBySlug(params.slug);
+  let resource: Resource | null = null;
+  
+  try {
+    resource = await GhostService.getResourceBySlug(params.slug);
+  } catch (error) {
+    console.error('Error fetching resource:', error);
+    notFound();
+  }
 
   if (!resource) {
     notFound();

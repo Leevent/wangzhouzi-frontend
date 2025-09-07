@@ -9,10 +9,25 @@ export const metadata: Metadata = {
 };
 
 export default async function ResourcesPage() {
-  const [allResources, allCategories] = await Promise.all([
-    GhostService.getAllResources(),
-    GhostService.getAllCategories()
-  ]);
+  let allResources: Resource[] = [];
+  let allCategories: Category[] = [];
+  
+  try {
+    [allResources, allCategories] = await Promise.all([
+      GhostService.getAllResources().catch(err => {
+        console.error('Error fetching all resources:', err);
+        return [];
+      }),
+      GhostService.getAllCategories().catch(err => {
+        console.error('Error fetching categories:', err);
+        return [];
+      })
+    ]);
+  } catch (error) {
+    console.error('Critical error in ResourcesPage data fetching:', error);
+    allResources = [];
+    allCategories = [];
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

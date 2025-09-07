@@ -11,31 +11,54 @@ interface CategoryPageProps {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const [categoryResources, allCategories] = await Promise.all([
-    GhostService.getResourcesByCategory(params.slug),
-    GhostService.getAllCategories()
-  ]);
-  
-  const category = allCategories.find(cat => cat.slug === params.slug);
-  
-  if (!category) {
+  try {
+    const [categoryResources, allCategories] = await Promise.all([
+      GhostService.getResourcesByCategory(params.slug).catch(() => []),
+      GhostService.getAllCategories().catch(() => [])
+    ]);
+    
+    const category = allCategories.find(cat => cat.slug === params.slug);
+    
+    if (!category) {
+      return {
+        title: '分類不存在 - 望周知',
+        description: '您所查找的分類不存在'
+      };
+    }
+
     return {
-      title: '分類不存在 - 望周知',
-      description: '您所查找的分類不存在'
+      title: `${category.name} - 望周知`,
+      description: category.description || '台灣優質資源分類',
+    };
+  } catch (error) {
+    console.error('Error generating metadata for category:', error);
+    return {
+      title: '分類載入中 - 望周知',
+      description: '正在載入分類資訊'
     };
   }
-
-  return {
-    title: `${category.name} - 望周知`,
-    description: category.description,
-  };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const [categoryResources, allCategories] = await Promise.all([
-    GhostService.getResourcesByCategory(params.slug),
-    GhostService.getAllCategories()
-  ]);
+  let categoryResources: Resource[] = [];
+  let allCategories: Category[] = [];
+  
+  try {
+    [categoryResources, allCategories] = await Promise.all([
+      GhostService.getResourcesByCategory(params.slug).catch(err => {
+        console.error('Error fetching category resources:', err);
+        return [];
+      }),
+      GhostService.getAllCategories().catch(err => {
+        console.error('Error fetching categories:', err);
+        return [];
+      })
+    ]);
+  } catch (error) {
+    console.error('Critical error in CategoryPage data fetching:', error);
+    categoryResources = [];
+    allCategories = [];
+  }
 
   const category = allCategories.find(cat => cat.slug === params.slug);
 

@@ -238,6 +238,51 @@ export class GhostService {
       return allResources.find(resource => resource.slug === slug) || null;
     }
   }
+
+  // 獲取所有部落格文章
+  static async getAllBlogPosts(): Promise<Resource[]> {
+    try {
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter: 'tag:blog+visibility:public',
+        order: 'published_at DESC'
+      });
+      
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+      // 返回測試部落格文章
+      return [
+        {
+          id: 'blog-1',
+          title: '如何有效使用台灣數位圖書館資源',
+          excerpt: '詳細介紹台灣各大數位圖書館的使用方法和豐富資源，讓您充分利用免費的學習資源。',
+          html: '<p>台灣的數位圖書館提供了豐富的學習資源...</p>',
+          slug: 'how-to-use-taiwan-digital-libraries',
+          featured: true,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          published_at: new Date().toISOString(),
+          tags: [{ id: 'blog', name: 'blog', slug: 'blog' }],
+          primary_tag: { id: 'blog', name: 'blog', slug: 'blog' }
+        },
+        {
+          id: 'blog-2',
+          title: '政府數位服務申請完整指南',
+          excerpt: '一步步教您如何使用政府數位服務平台，輕鬆完成各種線上申請。',
+          html: '<p>政府數位服務讓民眾能夠方便地在線上完成各種申請...</p>',
+          slug: 'government-digital-services-guide',
+          featured: false,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          published_at: new Date().toISOString(),
+          tags: [{ id: 'blog', name: 'blog', slug: 'blog' }],
+          primary_tag: { id: 'blog', name: 'blog', slug: 'blog' }
+        }
+      ];
+    }
+  }
 }
 
 export default api;

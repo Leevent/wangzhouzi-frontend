@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   description: '瀏覽所有台灣在地優質資源',
 };
 
+// 分類對應的圖示和顏色
 const categoryConfig: { [key: string]: { icon: string; color: string } } = {
   '數位學習': { icon: '📚', color: '#E57373' },
   '政府服務': { icon: '🏛️', color: '#64B5F6' },
@@ -44,6 +45,12 @@ export default async function ResourcesPage() {
               </Link>
               <Link href="/categories" className="text-gray-700 hover:text-blue-400 font-medium">
                 分類瀏覽
+              </Link>
+              <Link href="/blog" className="text-gray-700 hover:text-blue-400 font-medium">
+                部落格
+              </Link>
+              <Link href="/about" className="text-gray-700 hover:text-blue-400 font-medium">
+                關於我們
               </Link>
               <a 
                 href="https://iwantyouknow.zeabur.app/ghost" 
@@ -162,7 +169,36 @@ export default async function ResourcesPage() {
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-red-400">關於望周知</h3>
+              <p className="text-gray-300 leading-relaxed">
+                我們致力於整合台灣在地優質資源，讓每個人都能享有平等的資訊獲取機會，共同建設更美好的社會。
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-red-400">快速連結</h3>
+              <ul className="space-y-2">
+                <li><Link href="/resources" className="text-gray-300 hover:text-white">所有資源</Link></li>
+                <li><Link href="/categories" className="text-gray-300 hover:text-white">分類瀏覽</Link></li>
+                <li><Link href="/blog" className="text-gray-300 hover:text-white">部落格</Link></li>
+                <li><Link href="/about" className="text-gray-300 hover:text-white">關於我們</Link></li>
+                <li><a href="https://iwantyouknow.zeabur.app/ghost" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white">管理後台</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-red-400">聯絡資訊</h3>
+              <p className="text-gray-300">
+                📧 contact@wangzhouzi.tw<br/>
+                📞 歡迎透過 GitHub 聯繫<br/>
+                📍 台灣
+              </p>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center">
             <p className="text-gray-300">
               &copy; 2025 望周知 - 台灣在地優質資源平台. 讓優質資源被看見。
             </p>

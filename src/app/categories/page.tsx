@@ -1,47 +1,11 @@
 import { Metadata } from 'next';
 import { GhostService, Category } from '@/lib/ghost';
 import Link from 'next/link';
+import { categoryConfig } from '@/config/categories';
 
 export const metadata: Metadata = {
   title: '分類瀏覽 - 望周知',
   description: '依照不同分類瀏覽台灣在地優質資源',
-};
-
-const categoryConfig: { [key: string]: { 
-  icon: string; 
-  color: string; 
-  description: string;
-} } = {
-  '數位學習': { 
-    icon: '📚', 
-    color: '#E57373',
-    description: '免費的線上課程、電子書籍、數位雜誌等學習資源'
-  },
-  '政府服務': { 
-    icon: '🏛️', 
-    color: '#64B5F6',
-    description: '各級政府機關提供的便民服務與線上申辦系統'
-  },
-  '社會福利': { 
-    icon: '🤝', 
-    color: '#81C784',
-    description: '社會福利資源、補助計畫、弱勢關懷等相關服務'
-  },
-  '技能培訓': { 
-    icon: '💡', 
-    color: '#FFB74D',
-    description: '職業訓練、技能認證、專業進修等培訓機會'
-  },
-  '數位工具': { 
-    icon: '🌐', 
-    color: '#BA68C8',
-    description: '免費軟體、線上工具、數位服務等實用資源'
-  },
-  '預設': { 
-    icon: '📋', 
-    color: '#78909C',
-    description: '其他優質資源'
-  }
 };
 
 export default async function CategoriesPage() {

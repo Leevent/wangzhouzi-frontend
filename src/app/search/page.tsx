@@ -4,15 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { GhostService, Resource } from '@/lib/ghost';
 import Link from 'next/link';
-
-const categoryConfig: { [key: string]: { icon: string; color: string } } = {
-  '數位學習': { icon: '📚', color: '#E57373' },
-  '政府服務': { icon: '🏛️', color: '#64B5F6' },
-  '社會福利': { icon: '🤝', color: '#81C784' },
-  '技能培訓': { icon: '💡', color: '#FFB74D' },
-  '數位工具': { icon: '🌐', color: '#BA68C8' },
-  '預設': { icon: '📋', color: '#78909C' }
-};
+import { categoryConfig } from '@/config/categories';
 
 // 搜尋載入組件
 function SearchLoading() {

@@ -1,23 +1,11 @@
 import { Metadata } from 'next';
 import { GhostService, Resource, Category } from '@/lib/ghost';
 import Link from 'next/link';
+import { categoryConfig } from '@/config/categories';
 
 export const metadata: Metadata = {
   title: '所有資源 - 望周知',
   description: '瀏覽所有台灣在地優質資源',
-};
-
-// 分類對應的圖示和顏色
-const categoryConfig: { [key: string]: { icon: string; color: string } } = {
-  '數位學習': { icon: '📚', color: '#E57373' },
-  '政府服務': { icon: '🏛️', color: '#64B5F6' },
-  '社會福利': { icon: '🤝', color: '#81C784' },
-  '技能培訓': { icon: '💡', color: '#FFB74D' },
-  '數位工具': { icon: '🌐', color: '#BA68C8' },
-  '圖書館資源': { icon: '📖', color: '#A5D6A7' },
-  '開放式課程': { icon: '🎓', color: '#FFCC80' },
-  '創業經營': { icon: '💼', color: '#F8BBD9' },
-  '預設': { icon: '📋', color: '#78909C' }
 };
 
 export default async function ResourcesPage() {

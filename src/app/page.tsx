@@ -1,21 +1,12 @@
 import { Metadata } from 'next';
 import { GhostService, Resource, Category } from '@/lib/ghost';
 import Link from 'next/link';
+import { categoryConfig } from '@/config/categories';
 
 export const metadata: Metadata = {
   title: '望周知 - 台灣在地優質資源平台',
   description: '希望每個人都能知道台灣的優質資源與服務',
   keywords: ['台灣', '資源', '政府服務', '教育', '民間組織'],
-};
-
-// 分類對應的圖示和顏色
-const categoryConfig: { [key: string]: { icon: string; color: string; description: string } } = {
-  '數位學習': { icon: '📚', color: '#E57373', description: '免費線上課程、電子書、數位雜誌' },
-  '政府服務': { icon: '🏛️', color: '#64B5F6', description: '各級政府提供的便民服務' },
-  '社會福利': { icon: '🤝', color: '#81C784', description: '社福資源、補助計畫' },
-  '技能培訓': { icon: '💡', color: '#FFB74D', description: '職訓、認證、進修機會' },
-  '數位工具': { icon: '🌐', color: '#BA68C8', description: '免費軟體、線上工具' },
-  '預設': { icon: '📋', color: '#78909C', description: '其他優質資源' }
 };
 
 export default async function HomePage() {

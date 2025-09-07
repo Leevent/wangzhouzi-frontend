@@ -2,8 +2,8 @@ import GhostContentAPI from '@tryghost/content-api';
 
 // 建立 Ghost API 連接
 const api = new GhostContentAPI({
-  url: process.env.GHOST_API_URL!,
-  key: process.env.GHOST_CONTENT_API_KEY!,
+  url: process.env.GHOST_API_URL || 'https://iwantyouknow.zeabur.app',
+  key: process.env.GHOST_CONTENT_API_KEY || '429bdfab434c10e7ff5a4374ab',
   version: 'v5.0'
 });
 

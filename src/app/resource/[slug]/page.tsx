@@ -2,15 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { GhostService, Resource } from '@/lib/ghost';
 import Link from 'next/link';
-
-const categoryConfig: { [key: string]: { icon: string; color: string } } = {
-  '數位學習': { icon: '📚', color: '#E57373' },
-  '政府服務': { icon: '🏛️', color: '#64B5F6' },
-  '社會福利': { icon: '🤝', color: '#81C784' },
-  '技能培訓': { icon: '💡', color: '#FFB74D' },
-  '數位工具': { icon: '🌐', color: '#BA68C8' },
-  '預設': { icon: '📋', color: '#78909C' }
-};
+import { categoryConfig } from '@/config/categories';
 
 interface ResourcePageProps {
   params: {
@@ -102,7 +94,7 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
               <h2 className="text-2xl font-bold text-gray-900 mb-6">詳細資訊</h2>
               <div 
                 className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-800 prose-a:text-blue-600 prose-strong:text-gray-900"
-                dangerouslySetInnerHTML={{ __html: resource.html }}
+                dangerouslySetInnerHTML={{ __html: resource.html || '' }}
               />
             </div>
           </div>

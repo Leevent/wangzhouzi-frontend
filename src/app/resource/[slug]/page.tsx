@@ -4,7 +4,7 @@ import { GhostService, Resource } from '@/lib/ghost';
 import Link from 'next/link';
 
 const categoryConfig: { [key: string]: { icon: string; color: string } } = {
-  '數位學習': { icon: '��', color: '#E57373' },
+  '數位學習': { icon: '📚', color: '#E57373' },
   '政府服務': { icon: '🏛️', color: '#64B5F6' },
   '社會福利': { icon: '🤝', color: '#81C784' },
   '技能培訓': { icon: '💡', color: '#FFB74D' },

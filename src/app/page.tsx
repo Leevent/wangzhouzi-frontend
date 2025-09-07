@@ -52,14 +52,6 @@ export default async function HomePage() {
               <Link href="/about" className="text-gray-700 hover:text-blue-400 font-medium">
                 關於我們
               </Link>
-              <a 
-                href="https://iwantyouknow.zeabur.app/ghost" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors"
-              >
-                管理後台
-              </a>
             </div>
           </div>
         </div>
@@ -304,14 +296,13 @@ export default async function HomePage() {
                 <li><Link href="/categories" className="text-gray-300 hover:text-white">分類瀏覽</Link></li>
                 <li><Link href="/blog" className="text-gray-300 hover:text-white">部落格</Link></li>
                 <li><Link href="/about" className="text-gray-300 hover:text-white">關於我們</Link></li>
-                <li><a href="https://iwantyouknow.zeabur.app/ghost" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white">管理後台</a></li>
               </ul>
             </div>
             
             <div>
               <h3 className="text-lg font-semibold mb-4 text-red-400">聯絡資訊</h3>
               <p className="text-gray-300">
-                📧 contact@wangzhouzi.tw<br/>
+                📧 contact@leevent.co<br/>
                 📞 歡迎透過 GitHub 聯繫<br/>
                 📍 台灣
               </p>

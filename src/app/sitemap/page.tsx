@@ -39,7 +39,6 @@ export default async function SitemapPage() {
       icon: '📄',
       links: [
         { name: '網站地圖', href: '/sitemap', description: '當前頁面 - 網站完整結構' },
-        { name: '管理後台', href: 'https://iwantyouknow.zeabur.app/ghost', description: 'Ghost CMS 管理後台' },
       ]
     }
   ];

@@ -90,7 +90,7 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
 
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-3">資源簡介</h2>
-                <p className="text-gray-700 leading-relaxed text-lg">
+                <p className="text-gray-900 leading-relaxed text-lg">
                   {resource.excerpt}
                 </p>
               </div>

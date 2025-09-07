@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { GhostService, Resource } from '@/lib/ghost';
 import Link from 'next/link';
 import { categoryConfig } from '@/config/categories';
+import ScrollToTop from '@/components/ScrollToTop';
 
 interface ResourcePageProps {
   params: {
@@ -88,7 +89,13 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
                         {category}
                       </span>
                       <span className="text-sm text-gray-500">
-                        發布於 {new Date(resource.published_at).toLocaleDateString('zh-TW')}
+                        發布於 {(() => {
+                          try {
+                            return new Date(resource.published_at).toLocaleDateString('zh-TW');
+                          } catch {
+                            return '未知日期';
+                          }
+                        })()}
                       </span>
                     </div>
                   </div>
@@ -98,7 +105,7 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
               <div className="bg-gray-50 rounded-lg p-6 mb-6">
                 <h2 className="text-lg font-semibold text-gray-900 mb-3">資源簡介</h2>
                 <p className="text-gray-700 leading-relaxed text-lg">
-                  {resource.excerpt}
+                  {resource.excerpt || '暫無簡介'}
                 </p>
               </div>
             </div>
@@ -107,10 +114,22 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
             <div className="p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">詳細資訊</h2>
-              <div 
-                className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-800 prose-a:text-blue-600 prose-strong:text-gray-900"
-                dangerouslySetInnerHTML={{ __html: resource.html || '' }}
-              />
+              {resource.html ? (
+                <div 
+                  className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-800 prose-a:text-blue-600 prose-strong:text-gray-900"
+                  dangerouslySetInnerHTML={{ 
+                    __html: resource.html
+                      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+                      .replace(/<iframe\b[^>]*>/gi, '')
+                      .replace(/<object\b[^>]*>/gi, '')
+                      .replace(/<embed\b[^>]*>/gi, '') 
+                  }}
+                />
+              ) : (
+                <div className="text-center py-12 text-gray-500">
+                  <p>暫無詳細內容</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -121,27 +140,19 @@ export default async function ResourceDetailPage({ params }: ResourcePageProps) 
             >
               瀏覽更多資源
             </Link>
-            <Link
-              href={`/category/${resource.primary_tag?.slug || ''}`}
-              className="border-2 border-blue-400 text-blue-400 px-6 py-3 rounded-lg hover:bg-blue-400 hover:text-white transition-colors font-medium"
-            >
-              瀏覽{category}分類
-            </Link>
+            {resource.primary_tag?.slug && (
+              <Link
+                href={`/category/${resource.primary_tag.slug}`}
+                className="border-2 border-blue-400 text-blue-400 px-6 py-3 rounded-lg hover:bg-blue-400 hover:text-white transition-colors font-medium"
+              >
+                瀏覽{category}分類
+              </Link>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="fixed bottom-8 right-8">
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="bg-blue-400 text-white p-3 rounded-full shadow-lg hover:bg-blue-500 transition-colors"
-          aria-label="回到頂部"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-          </svg>
-        </button>
-      </div>
+      <ScrollToTop />
 
       <footer className="bg-gray-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

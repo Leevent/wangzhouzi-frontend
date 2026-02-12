@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git config:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(npm run build:*)",
+      "WebFetch(domain:sandbox8.amgserver.com.tw)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

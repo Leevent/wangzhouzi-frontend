@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水處理專業解決方案 - 嘉澎塑膠</title>
+    <style>
+/* ================== Brand + 站點設定（作用域） ================== */
+.cp-water {
+    /* 基調：奶油白＋灰；品牌色：柔和綠為主、Logo 藍僅點綴、珊瑚紅作 CTA */
+    --brand-text: #2C2C2C;
+    --tone-cream: #FAF7F2;
+    /* 主背景基調 */
+    --tone-gray: #F3F4F6;
+    /* 段落鋪底 */
+    --brand-primary: #28B190;
+    /* 主色：柔和綠（標題/重點） */
+    --brand-primary-dark: #15806C;
+    /* 主色深色 */
+    --brand-blue: #3CB3D4;
+    /* Logo 藍（點綴用） */
+    --brand-coral: #F36D6D;
+    /* CTA/強調 */
+    --brand-leaf: #69C23A;
+    /* 次要點綴 */
+
+    /* Layout（全站同寬 1200） */
+    --container-desktop: 1200px;
+    --gutter: 24px;
+    --gutter-lg: 28px;
+    --section-y: 80px;
+    --section-y-sm: 56px;
+
+    /* 無固定列 → 不做偏移，Hero 不下移 */
+    --header-h-mobile: 0px;
+    --header-h-desktop: 0px;
+    --subbar-h-mobile: 0px;
+    --subbar-h-desktop: 0px;
+    --fixed-ui-offset-mobile: 0px;
+    --fixed-ui-offset-desktop: 0px;
+
+    /* 錨點捲動不用預留空間 */
+    scroll-padding-top: 0;
+}
+
+@media (min-width: 992px) {
+    .cp-water {
+        --gutter: var(--gutter-lg);
+    }
+}
+
+/* ================== Base（僅在作用域內生效） ================== */
+html,
+body {
+    height: 100%
+}
+
+body {
+    margin: 0
+}
+
+.cp-water,
+.cp-water * {
+    box-sizing: border-box
+}
+
+.cp-water {
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--brand-text);
+    line-height: 1.65;
+    background: var(--tone-cream);
+}
+
+.cp-water img {
+    max-width: 100%;
+    display: block;
+    vertical-align: middle;
+}
+
+.cp-water a {
+    color: inherit;
+    text-decoration: none
+}
+
+.cp-water .muted {
+    color: #6b7280;
+}
+
+/* Container & Section（全站同寬） */
+.cp-water .container {
+    width: min(100%, var(--container-desktop));
+    margin-inline: auto;
+    padding-inline: 20px;
+}
+
+.cp-water .section {
+    padding: var(--section-y) 0;
+}
+
+@media (max-width: 768px) {
+    .cp-water .section {
+        padding: var(--section-y-sm) 0;
+    }
+}
+
+/* Grid：等寬自適應 */
+.cp-water .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gutter);
+    align-items: start;
+    margin: 0 !important;
+}
+
+@media (min-width:768px) {
+    .cp-water .row.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width:992px) {
+    .cp-water .row.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .cp-water .row.cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .cp-water .row.cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+
+/* 防外部框架 col-* 干擾 */
+.cp-water .row>[class^="col-"],
+.cp-water .row>[class*=" col-"] {
+    flex: initial !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+/* 全幅背景（段落需要鋪滿視窗寬時加 .bleed） */
+.cp-water .bleed {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+}
+
+.cp-water .bleed::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* 用 100svw 避免 scrollbar 造成 100vw 偏移，修正桌機左右不對稱 */
+    left: calc(50% - 50svw);
+    width: 100svw;
+    background: var(--bleed-bg, var(--tone-gray));
+    z-index: -1;
+}
+
+/* ================== HERO ================== */
+.cp-water .hero {
+    position: relative;
+    z-index: 0;
+    color: #fff;
+    /* 主色為柔和綠，僅以少量藍混色作點綴的漸層 */
+    background: linear-gradient(135deg,
+            var(--brand-primary) 0%,
+            color-mix(in srgb, var(--brand-primary) 85%, var(--brand-blue)) 100%);
+    margin-top: 0;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 72px);
+    padding-bottom: 96px;
+    overflow: visible;
+    min-height: clamp(360px, 50vh, 600px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    border-radius: 0 0 12px 12px;
+}
+
+@media (min-width:992px) {
+    .cp-water .hero {
+        padding-top: 92px;
+    }
+}
+
+.cp-water .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><g fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2"><path d="M0,200 Q150,160 300,200 T600,200 T900,200 T1200,200"/><path d="M0,250 Q150,230 300,250 T600,250 T900,250 T1200,250"/></g></svg>') repeat-x;
+    animation: wave 22s linear infinite;
+    opacity: .9;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(-1200px)
+    }
+}
+
+.cp-water .hero .inner {
+    position: relative;
+    z-index: 1;
+    text-align: center
+}
+
+.cp-water .hero h1 {
+    margin: 0 0 8px;
+    font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    letter-spacing: .02em
+}
+
+.cp-water .hero .subtitle {
+    font-size: 1.15rem;
+    margin: 6px 0 10px;
+    letter-spacing: .06em;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+.cp-water .hero .desc {
+    font-size: 1.05rem;
+    opacity: .95
+}
+
+.cp-water .cta {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 18px
+}
+
+.cp-water .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: transform .2s, box-shadow .2s, background-color .2s, color .2s;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cp-water .btn-primary {
+    background: var(--brand-coral);
+    color: #fff
+}
+
+.cp-water .btn-outline {
+    color: #fff;
+    border: 2px solid #fff
+}
+
+.cp-water .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .2)
+}
+
+.cp-water .btn:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, .85);
+    outline-offset: 2px;
+}
+
+/* HERO 圖片群（新增：增加視覺素材） */
+.cp-water .hero-gallery {
+    margin: 18px auto 10px;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(100%, 880px);
+}
+
+.cp-water .hero-gallery figure {
+    margin: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .12);
+    background: #ffffff20;
+}
+
+.cp-water .hero-gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (min-width:768px) {
+    .cp-water .hero-gallery {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .cp-water .hero-gallery img {
+        height: 140px;
+    }
+}
+
+@media (max-width:767.98px) {
+    .cp-water .hero-gallery {
+        overflow-x: auto;
+        grid-auto-flow: column;
+        grid-auto-columns: 70%;
+        padding-bottom: 6px;
+    }
+
+    .cp-water .hero-gallery figure {
+        min-width: 70%;
+    }
+
+    .cp-water .hero-gallery .hide-sm {
+        display: none;
+    }
+}
+
+/* ================== 標題 ================== */
+.cp-water .section-title {
+    text-align: center;
+    color: var(--brand-primary-dark);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+    margin: 0 0 44px;
+}
+
+/* ================== INTRO ================== */
+.cp-water .intro .text h2 {
+    color: var(--brand-primary-dark);
+    margin: 0 0 14px;
+    font-size: 2rem;
+}
+
+.cp-water .intro img {
+    border-radius: 12px;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+}
+
+/* ================== 卡片樣式（統一陰影/圓角/內距） ================== */
+.cp-water .card,
+.cp-water .item,
+.cp-water .kpi {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .06);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cp-water .icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--brand-primary), color-mix(in srgb, var(--brand-primary) 70%, var(--brand-blue)));
+    color: #fff;
+    font-size: 1.8rem;
+}
+
+.cp-water .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .08);
+}
+
+/* ================== 水處理專業優勢（Features） ================== */
+.cp-water .features .card {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
+    text-align: center;
+}
+
+.cp-water .features h3 {
+    margin: 6px 0 8px;
+    color: var(--brand-primary-dark);
+    font-size: 1.2rem;
+}
+
+/* 內頁圖片卡（新增：改善圖文平衡） */
+.cp-water .card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+@media (min-width:992px) {
+    .cp-water .card img {
+        height: 200px;
+    }
+}
+
+/* ================== 應用領域 ================== */
+.cp-water .applications {
+    --bleed-bg: var(--tone-gray);
+}
+
+.cp-water .applications .item {
+    border-left: 4px solid var(--brand-primary);
+}
+
+.cp-water .applications .item h4 {
+    margin: 0 0 8px;
+    color: var(--brand-primary-dark);
+    font-size: 1.05rem;
+}
+
+/* ================== 解決方案 ================== */
+.cp-water .solutions .card {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    text-align: center;
+}
+
+.cp-water .solutions .card h4 {
+    margin: 0 0 8px;
+    color: var(--brand-primary-dark);
+    font-size: 1.05rem;
+}
+
+/* ================== 實績數據（Stats） ================== */
+.cp-water .stats .row {
+    gap: 18px;
+}
+
+.cp-water .stats .kpi {
+    text-align: center;
+    padding: 20px;
+    justify-content: center;
+}
+
+.cp-water .stats .kpi h4 {
+    margin: 0 0 6px;
+    color: var(--brand-primary-dark);
+    font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+}
+
+/* ================== 成功案例（Case） ================== */
+.cp-water .case-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--gutter);
+    align-items: stretch;
+}
+
+@media (min-width: 992px) {
+    .cp-water .case-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 56px;
+        row-gap: 28px;
+    }
+
+    .cp-water .case-grid::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 1px;
+        transform: translateX(-50%);
+        background: rgba(21, 156, 134, .15);
+        pointer-events: none;
+    }
+}
+
+.cp-water .case .card {
+    padding: 28px;
+}
+
+.cp-water .case .card h4 {
+    margin: 0 0 8px;
+    color: var(--brand-primary-dark);
+    font-size: 1.05rem;
+}
+
+.cp-water .highlight {
+    background: color-mix(in srgb, var(--brand-primary) 8%, #fff);
+    border-left: 4px solid var(--brand-primary);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 12px 0;
+}
+
+.cp-water .highlight ul {
+    margin: 8px 0 0 18px;
+}
+
+/* ================= 行動裝置優化（<= 767px） ================= */
+@media (max-width: 767.98px) {
+    .cp-water .container {
+        padding-inline: 16px;
+    }
+
+    .cp-water .row {
+        gap: 16px !important;
+    }
+
+    .cp-water .hero {
+        padding-top: 56px;
+        padding-bottom: 56px;
+        min-height: clamp(380px, 54vh, 620px);
+        border-radius: 0 0 12px 12px;
+    }
+
+    .cp-water .hero h1 {
+        font-size: clamp(22px, 6.2vw, 28px);
+        line-height: 1.25;
+        letter-spacing: .01em;
+    }
+
+    .cp-water .hero .subtitle {
+        font-size: 15px;
+        line-height: 1.6;
+        letter-spacing: .02em;
+    }
+
+    .cp-water .hero .desc {
+        font-size: 14.5px;
+        line-height: 1.7;
+    }
+
+    .cp-water .cta {
+        gap: 10px;
+    }
+
+    .cp-water .card,
+    .cp-water .item,
+    .cp-water .kpi {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+    .cp-water .icon {
+        width: 56px;
+        height: 56px;
+        font-size: 1.4rem;
+    }
+
+    .cp-water .section-title {
+        font-size: clamp(20px, 5.2vw, 24px);
+        margin-bottom: 24px;
+    }
+}
+
+/* 使用者偏好：減少動效 */
+@media (prefers-reduced-motion: reduce) {
+    .cp-water * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .cp-water .hero::before {
+        animation: none !important;
+    }
+}
+
+/* 高對比度模式支援 */
+@media (prefers-contrast: high) {
+    .cp-water .btn-outline {
+        border-width: 3px;
+    }
+
+    .cp-water .card {
+        border: 1px solid #ccc;
+    }
+}
+
+/* 折疊保護：避免第一/末元素 margin 外溢造成白塊錯覺 */
+.cp-water .section>*:first-child {
+    margin-top: 0;
+}
+
+.cp-water .section>*:last-child {
+    margin-bottom: 0;
+}
+    </style>
+</head>
+<body>
+<main class="cp-water">
+    <!-- HERO -->
+    <header class="hero" aria-label="水處理解決方案">
+        <div class="container">
+            <div class="inner">
+                <h1>水處理專業解決方案</h1>
+                <p class="subtitle">耐腐蝕 &times; 長壽命 &times; 易安裝維護</p>
+                <p class="desc">為自來水廠、污水處理廠、海水淡化等設施提供全方位 <strong>UPVC 管路系統</strong></p>
+                <!-- Hero 圖片群（新增：增加視覺素材） -->
+                <div class="hero-gallery" aria-label="水處理設施示意圖">
+                    <figure><img loading="lazy" src="/assets/water-treatment-1.jpg" alt="自來水廠UPVC管路" width="200" height="150" /></figure>
+                    <figure><img loading="lazy" src="/assets/water-treatment-2.jpg" alt="污水處理系統" width="200" height="150" /></figure>
+                    <figure class="hide-sm"><img loading="lazy" src="/assets/water-treatment-3.jpg" alt="海水淡化設備" width="200" height="150" /></figure>
+                    <figure class="hide-sm"><img loading="lazy" src="/assets/water-treatment-4.jpg" alt="工業用水處理" width="200" height="150" /></figure>
+                </div>
+                <div class="cta"><a class="btn btn-primary" href="#contact">立即諮詢</a> <a class="btn btn-outline" href="#features">了解更多</a></div>
+            </div>
+        </div>
+    </header><!-- INTRO：桌機兩欄／手機單欄 -->
+    <section class="section intro" aria-labelledby="intro-title">
+        <div class="container">
+            <div class="row cols-2">
+                <div><img src="/assets/upvc-pipes-installation.jpg" alt="UPVC 管路於水處理現場應用" loading="lazy" width="500" height="300" /></div>
+                <div class="text">
+                    <h2 id="intro-title">為什麼選擇 UPVC？</h2>
+                    <p>UPVC 管材對酸、鹼、鹽具優異耐受，在 pH 3&ndash;12 的化學環境中可長期穩定運作；內壁光滑不易結垢，降低壓損並維持水質穩定。搭配溶劑膠接工藝，安裝快速、密封可靠，維護成本顯著降低，適用於原水處理、加藥、RO、UF 與回收再利用等全流程。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FEATURES：桌機四欄／手機單欄 -->
+    <section id="features" class="section features" aria-labelledby="features-title">
+        <div class="container">
+            <h2 id="features-title" class="section-title">水處理專業優勢</h2>
+            <div class="row cols-4">
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <h3>卓越耐腐蝕</h3>
+                    <p>對常見酸鹼鹽具高耐受，降低腐蝕與漏損風險，延長系統壽命。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">⚙️</div>
+                    <h3>結構穩健</h3>
+                    <p>高剛性與良好尺寸穩定性，適配多種支撐方式與施工場景。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🌊</div>
+                    <h3>穩定水質</h3>
+                    <p>內壁光滑不易結垢與生物膜形成，維持通量與水質穩定。</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔧</div>
+                    <h3>易安裝維護</h3>
+                    <p>輕量化與溶劑膠接工藝，施工快、密封可靠，維護友善。</p>
+                </div>
+            </div>
+            <!-- 內頁圖片節奏：改善圖文平衡 -->
+            <div class="row cols-3" style="margin-top: 32px;">
+                <div class="card" aria-hidden="true"><img loading="lazy" src="/assets/water-facility-1.jpg" alt="水處理廠管路系統" width="300" height="180" /></div>
+                <div class="card" aria-hidden="true"><img loading="lazy" src="/assets/water-facility-2.jpg" alt="RO反滲透設備" width="300" height="180" /></div>
+                <div class="card hide-sm" aria-hidden="true"><img loading="lazy" src="/assets/water-facility-3.jpg" alt="加藥系統配置" width="300" height="180" /></div>
+            </div>
+        </div>
+    </section>
+    <!-- APPLICATIONS：桌機三欄／手機單欄 -->
+    <section class="section applications bleed" aria-labelledby="apps-title">
+        <div class="container">
+            <h2 id="apps-title" class="section-title">水處理應用領域</h2>
+            <div class="row cols-3">
+                <div class="item">
+                    <h4>自來水廠</h4>
+                    <p>原水處理、清水輸送、加藥系統等全流程管路配置。</p>
+                </div>
+                <div class="item">
+                    <h4>污水處理廠</h4>
+                    <p>生化處理、污泥處理與回收再利用之管路佈署。</p>
+                </div>
+                <div class="item">
+                    <h4>海水淡化</h4>
+                    <p>預處理、反滲透（RO）、後處理等系統應用。</p>
+                </div>
+                <div class="item">
+                    <h4>工業用水</h4>
+                    <p>冷卻水、製程用水與循環水處理之管路解決方案。</p>
+                </div>
+                <div class="item">
+                    <h4>純水製造</h4>
+                    <p>RO 純水、去離子水（DI）、超純水（UPW）管路。</p>
+                </div>
+                <div class="item">
+                    <h4>加藥系統</h4>
+                    <p>絮凝劑、消毒劑、pH 調整劑等化學品輸送與分配。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SOLUTIONS：桌機三欄／手機單欄 -->
+    <section class="section solutions" aria-labelledby="sol-title">
+        <div class="container">
+            <h2 id="sol-title" class="section-title">完整解決方案</h2>
+            <div class="row cols-3">
+                <div class="card">
+                    <h4>產品資訊</h4>
+                    <p>由專業銷售顧問提供系統材料諮詢，確保系統可行性與長期維護。</p>
+                </div>
+                <div class="card">
+                    <h4>產品供應</h4>
+                    <p>UPVC 管材、管件、閥門與配件齊全，規格覆蓋廣泛。</p>
+                </div>
+                <div class="card">
+                    <h4>售後服務</h4>
+                    <p>全台六據點即時支援，<br />調料配貨專員服務，<br />降低停機風險。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- STATS：桌機四欄／平板二欄／手機一欄 -->
+    <section class="section stats bleed" aria-labelledby="stats-title">
+        <div class="container">
+            <h2 id="stats-title" class="section-title">實績數據</h2>
+            <div class="row cols-4">
+                <div class="kpi">
+                    <h4>20+</h4>
+                    <p>水處理專案經驗</p>
+                </div>
+                <div class="kpi">
+                    <h4>30年</h4>
+                    <p>管材使用壽命</p>
+                </div>
+                <div class="kpi">
+                    <h4>pH 3&ndash;12</h4>
+                    <p>適用化學環境範圍</p>
+                </div>
+                <div class="kpi">
+                    <h4>低維護</h4>
+                    <p>運轉維護成本更低</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CASE：桌機左右／手機上下；中縫＋垂直分隔線 -->
+    <section class="section case bleed" aria-labelledby="case-title">
+        <div class="container">
+            <h2 id="case-title" class="section-title">成功案例</h2>
+            <div class="case-grid">
+                <article class="card">
+                    <h4>大型自來水廠升級改造</h4>
+                    <p>原有金屬管路腐蝕影響水質與穩定性，導入 UPVC 全線方案：</p>
+                    <div class="highlight"><strong>解決方案：</strong>
+                        <ul>
+                            <li>優化管路佈局，流量效率提升 15%</li>
+                            <li>採用大口徑 UPVC，降低腐蝕與漏損風險</li>
+                            <li>配置 Y 型過濾器與球閥，提升清潔與操作便利</li>
+                            <li>提供現場支援，工期縮短 30%</li>
+                        </ul>
+                    </div>
+                    <p><strong>成果：</strong>運轉 3 年水質穩定達標，維護費用降低 60%。</p>
+                </article>
+                <article class="card">
+                    <h4>海水淡化廠系統優化</h4>
+                    <p>面對高鹽分與高紫外線環境之長期腐蝕挑戰：</p>
+                    <div class="highlight"><strong>技術特點：</strong>
+                        <ul>
+                            <li>耐蝕與抗 UV 配方，適應沿海高曝曬環境</li>
+                            <li>高精度接頭確保密封性，降低滲漏風險</li>
+                            <li>模組化設計，維護迅速，停機時間降至最低</li>
+                        </ul>
+                    </div>
+                    <p><strong>成果：</strong>穩定運轉 5 年，產水品質持續達標，維修成本累計節省 200 萬以上。</p>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

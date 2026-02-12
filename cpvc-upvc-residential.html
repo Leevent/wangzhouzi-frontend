@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="嘉澎塑膠提供專業 CPVC 熱水系統與 UPVC 給排水管路解決方案，安全衛生、經濟實用、安裝便利，適用於住宅、商業建築、公共設施等民生應用。" />
+<meta name="keywords" content="CPVC,UPVC,給排水,熱水系統,嘉澎塑膠,管路,民生應用,住宅建築,商業建築" />
+<meta property="og:title" content="嘉澎塑膠｜民生應用—CPVC/UPVC 給排水與熱水系統" />
+<meta property="og:description" content="專業 CPVC 熱水系統與 UPVC 給排水管路解決方案，安全衛生、經濟實用、安裝便利" />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>嘉澎塑膠｜民生應用—CPVC/UPVC 給排水與熱水系統</title>
+
+<style>
+/* ================== Brand + 站點設定（作用域） ================== */
+.cp-semi {
+  /* 基調：奶油白＋灰；品牌色：柔和綠為主、Logo 藍僅點綴、珊瑚紅作 CTA */
+  --brand-text: #2C2C2C;
+  --tone-cream: #FAF7F2;   /* 主背景基調 */
+  --tone-gray:  #F3F4F6;   /* 段落鋪底 */
+  --brand-primary: #28B190;       /* 主色：柔和綠（標題/重點） */
+  --brand-primary-dark: #15806C;  /* 主色深色 */
+  --brand-blue: #3CB3D4;          /* Logo 藍（點綴用） */
+  --brand-coral: #F36D6D;         /* CTA/強調 */
+  --brand-leaf:  #69C23A;         /* 次要點綴 */
+
+  /* Layout（全站同寬 1200） */
+  --container-desktop: 1200px;
+  --gutter: 24px;
+  --gutter-lg: 28px;
+  --section-y: 80px;
+  --section-y-sm: 56px;
+
+  /* 無固定列 → 不做偏移，Hero 不下移 */
+  --header-h-mobile: 0px;
+  --header-h-desktop: 0px;
+  --subbar-h-mobile: 0px;
+  --subbar-h-desktop: 0px;
+  --fixed-ui-offset-mobile: 0px;
+  --fixed-ui-offset-desktop: 0px;
+
+  /* 錨點捲動不用預留空間 */
+  scroll-padding-top: 0;
+}
+@media (min-width: 992px){ .cp-semi { --gutter: var(--gutter-lg); } }
+
+/* ================== Base（僅在作用域內生效） ================== */
+html,body{height:100%}
+body{margin:0}
+.cp-semi, .cp-semi * { box-sizing: border-box }
+.cp-semi {
+  font-family: 'Microsoft JhengHei', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--brand-text);
+  line-height: 1.65;
+  background: var(--tone-cream);
+}
+.cp-semi img { max-width: 100%; display: block; vertical-align: middle; }
+.cp-semi a { color: inherit; text-decoration: none }
+.cp-semi .muted { color:#6b7280; }
+
+/* Container & Section（全站同寬） */
+.cp-semi .container {
+  width: min(100%, var(--container-desktop));
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+.cp-semi .section { 
+  padding: var(--section-y) 0; 
+  overflow: visible;
+  min-height: fit-content;
+}
+@media (max-width: 768px){
+  .cp-semi .section { padding: var(--section-y-sm) 0; }
+}
+
+/* Grid：等寬自適應 */
+.cp-semi .row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gutter);
+  align-items: start; /* 修正等高/對齊 */
+  margin: 0 !important;
+}
+@media (min-width:768px){ .cp-semi .row.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (min-width:992px){
+  .cp-semi .row.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .cp-semi .row.cols-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .cp-semi .row.cols-5 { grid-template-columns: repeat(5, minmax(0,1fr)); }
+}
+/* 防外部框架 col-* 干擾 */
+.cp-semi .row>[class^="col-"], .cp-semi .row>[class*=" col-"]{
+  flex: initial !important; max-width: 100% !important; width: 100% !important; padding: 0 !important;
+}
+
+/* 全幅背景（段落需要鋪滿視窗寬時加 .bleed） */
+.cp-semi .bleed { position: relative; isolation: isolate; overflow: visible; } /* 修正防溢位白塊 */
+.cp-semi .bleed::before{
+  content: ""; position: absolute; top: 0; bottom: 0;
+  /* 用 100svw 避免 scrollbar 造成 100vw 偏移，修正桌機左右不對稱 */
+  left: calc(50% - 50svw); width: 100svw;
+  background: var(--bleed-bg, var(--tone-gray)); z-index: -1;
+}
+
+/* ================== HERO ================== */
+.cp-semi .hero{will-change: transform;
+  position: relative; z-index: 0; color: #fff;
+  /* 主色為柔和綠，僅以少量藍混色作點綴的漸層 */
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary) 0%,
+    color-mix(in srgb, var(--brand-primary) 75%, var(--brand-blue)) 100%
+  );
+  margin-top: 0; /* 不保留頂部白邊 */
+  padding-top: calc(env(safe-area-inset-top, 0px) + 72px);
+  padding-bottom: 96px;
+  overflow: visible;
+  min-height: clamp(360px, 50vh, 600px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+  border-radius: 0 0 12px 12px;
+}
+@media (min-width:992px){ .cp-semi .hero{ padding-top: 92px; } }
+.cp-semi .hero::before{
+  content: ""; position: absolute; inset: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><g fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2"><path d="M0,200 Q150,160 300,200 T600,200 T900,200 T1200,200"/><path d="M0,250 Q150,230 300,250 T600,250 T900,250 T1200,250"/></g></svg>') repeat-x;
+  animation: wave 22s linear infinite; opacity: .9;
+}
+@keyframes wave{ 0%{ transform: translateX(0) } 100%{ transform: translateX(-1200px) } }
+
+.cp-semi .hero .inner{ position: relative; z-index: 1; text-align: center }
+.cp-semi .hero h1{ margin: 0 0 8px; font-weight: 800; font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: .02em }
+.cp-semi .hero .subtitle{
+  font-size: 1.15rem; margin: 6px 0 10px; letter-spacing: .06em;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+}
+.cp-semi .hero .desc{ font-size: 1.05rem; opacity: .95 }
+.cp-semi .cta{ display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 18px }
+.cp-semi .btn{ display: inline-flex; align-items: center; justify-content: center; padding: 12px 20px; border-radius: 10px; font-weight: 700; transition: transform .2s, box-shadow .2s, background-color .2s, color .2s; border: none; cursor: pointer; text-align: center; }
+.cp-semi .btn-primary{ background: var(--brand-coral); color: #fff }
+.cp-semi .btn-outline{ color: #fff; border: 2px solid #fff }
+.cp-semi .btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.2) }
+.cp-semi .btn:focus-visible{ outline: 3px solid rgba(255,255,255,.85); outline-offset: 2px; }
+
+/* HERO 圖片群（要點一-A） */
+.cp-semi .hero-gallery{
+  margin: 18px auto 10px;
+  display: grid; gap: 10px;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  width: min(100%, 880px);
+}
+.cp-semi .hero-gallery figure{
+  margin:0; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12); background: #ffffff20;
+}
+.cp-semi .hero-gallery img{ width:100%; height: 150px; object-fit: cover; display:block; }
+@media (min-width:768px){
+  .cp-semi .hero-gallery{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .cp-semi .hero-gallery img{ height: 140px; }
+}
+@media (max-width:767.98px){
+  .cp-semi .hero-gallery{ overflow-x: auto; grid-auto-flow: column; grid-auto-columns: 70%; padding-bottom: 6px; }
+  .cp-semi .hero-gallery figure{ min-width: 70%; }
+  .cp-semi .hero-gallery .hide-sm{ display:none; }
+}
+
+/* ================== 標題 ================== */
+.cp-semi .section-title{
+  text-align: center; color: var(--brand-primary-dark); font-weight: 800;
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem); margin: 0 0 44px;
+}
+
+/* ================== 卡片樣式（統一陰影/圓角/內距） ================== */
+.cp-semi .card, .cp-semi .item, .cp-semi .kpi{
+  background: #fff; border-radius: 12px; box-shadow: 0 10px 24px rgba(0, 0, 0, .06);
+  padding: 26px; display: flex; flex-direction: column; height: 100%;
+}
+.cp-semi .icon{
+  width: 70px; height: 70px; margin: 0 auto 12px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-blue)); /* 藍僅點綴一端 */
+  color: #fff; font-size: 1.8rem;
+}
+.cp-semi .card{ transition: transform .2s ease, box-shadow .2s ease; }
+.cp-semi .card:hover{ transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0, 0, 0, .08); }
+
+/* ================== 民生應用優勢（Features） ================== */
+.cp-semi .features .item{ border-top: 4px solid var(--brand-coral); text-align: center; }
+.cp-semi .features h3{ margin: 6px 0 8px; color: var(--brand-primary-dark); font-size: 1.2rem; }
+
+/* 內頁圖片卡（要點一-B：2:1 圖文節奏） */
+.cp-semi .card img{ width:100%; height: 180px; object-fit: cover; border-radius: 8px; }
+@media (min-width:992px){ .cp-semi .card img{ height: 200px; } }
+
+/* ================== 應用範圍 Tabs ================== */
+.cp-semi .applications{ --bleed-bg: var(--tone-gray); }
+.cp-semi .tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
+.cp-semi .tab-btn{
+  padding: 10px 18px; border: 2px solid transparent; border-radius: 999px; font-weight: 700; cursor: pointer;
+  background: #ecf0f1; transition: background-color .2s, color .2s, border-color .2s, transform .2s;
+}
+.cp-semi .tab-btn[aria-selected="true"]{
+  background: var(--brand-primary); color: #fff; border-color: var(--brand-primary-dark);
+}
+.cp-semi .tab-btn:focus-visible{ outline: 3px solid #90e6d7; outline-offset: 2px; }
+.cp-semi .tab-panel{ display: none; }
+.cp-semi .tab-panel[data-active="true"]{
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--gutter);
+}
+.cp-semi .app-card{ padding: 22px; }
+.cp-semi .app-card h4{ margin: 8px 0 8px; color: var(--brand-primary-dark); font-size: 1.05rem; }
+.cp-semi .app-ico{ font-size: 1.8rem; display: block; margin-bottom: 6px; }
+
+/* ================== 選擇嘉澎的理由（Benefits） ================== */
+.cp-semi .benefits{ --bleed-bg: var(--tone-gray); }
+.cp-semi .benefit-item{ text-align: center; }
+.cp-semi .benefit-item h4{ margin: 4px 0 10px; color: var(--brand-primary-dark); }
+
+/* ================== 安裝步驟（Steps） ================== */
+.cp-semi .steps .num{
+  width: 56px; height: 56px; margin: 0 auto 12px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 1.1rem;
+  background: linear-gradient(135deg, var(--brand-coral), #e28f8f);
+}
+
+/* ================== 客戶見證 ================== */
+.cp-semi .testimonials{
+  color: #fff;
+  --bleed-bg: linear-gradient(135deg, var(--brand-primary-dark), color-mix(in srgb, var(--brand-primary-dark) 60%, var(--brand-blue)));
+}
+.cp-semi .testimonial{ background: rgba(255,255,255,.12); color: #fff; }
+.cp-semi .testimonial .who{ color: #FFE3D6; font-weight: 700; }
+
+/* ================= 行動裝置優化（<= 767px） ================= */
+@media (max-width: 767.98px) {
+  .cp-semi .container{ padding-inline: 16px; }
+  .cp-semi .row{ gap: 16px !important; }
+
+  .cp-semi .hero{
+    padding-top: 56px;
+    padding-bottom: 56px;
+    min-height: clamp(380px, 54vh, 620px);
+    border-radius: 0 0 12px 12px;
+  }
+  .cp-semi .hero h1{ font-size: clamp(22px, 6.2vw, 28px); line-height: 1.25; letter-spacing: .01em; }
+  .cp-semi .hero .subtitle{ font-size: 15px; line-height: 1.6; letter-spacing: .02em; }
+  .cp-semi .hero .desc{ font-size: 14.5px; line-height: 1.7; }
+  .cp-semi .cta{ gap: 10px; }
+
+  .cp-semi .card, .cp-semi .item, .cp-semi .kpi{ padding: 16px; border-radius: 10px; }
+  .cp-semi .icon{ width: 56px; height: 56px; font-size: 1.4rem; }
+
+  .cp-semi .section-title{ font-size: clamp(20px, 5.2vw, 24px); margin-bottom: 24px; }
+}
+
+/* 使用者偏好：減少動效 */
+@media (prefers-reduced-motion: reduce){
+  .cp-semi * { animation: none !important; transition: none !important; }
+  .cp-semi .hero::before { animation: none !important; }
+}
+
+/* 高對比度模式支援 */
+@media (prefers-contrast: high) {
+  .cp-semi .btn-outline { border-width: 3px; }
+  .cp-semi .card { border: 1px solid #ccc; }
+}
+
+/* 折疊保護：避免第一/末元素 margin 外溢造成白塊錯覺 */
+.cp-semi .section > *:first-child{ margin-top: 0; }
+.cp-semi .section > *:last-child{ margin-bottom: 0; }
+</style>
+</head>
+
+<body>
+<main class="cp-semi">
+
+  <!-- HERO -->
+  <header class="hero" aria-label="民生應用—CPVC/UPVC 給排水與熱水系統">
+    <div class="container">
+      <div class="inner">
+        <h1>民生應用專業解決方案</h1>
+        <p class="subtitle">安全衛生 × 經濟實用 × 安裝便利</p>
+        <p class="desc">為住宅、商業建築、公共設施提供 <strong>CPVC 熱水系統</strong> 與 <strong>UPVC 給排水管路</strong></p>
+
+        <!-- Hero 圖片群（要點一-A） -->
+        <div class="hero-gallery" aria-label="民生應用示意圖">
+          <figure><img loading="lazy" src="/assets/residential-1.jpg" alt="住宅熱水 CPVC 管路" width="200" height="150"></figure>
+          <figure><img loading="lazy" src="/assets/residential-2.jpg" alt="廚房給水 UPVC 管路" width="200" height="150"></figure>
+          <figure class="hide-sm"><img loading="lazy" src="/assets/residential-3.jpg" alt="衛浴排水配置" width="200" height="150"></figure>
+          <figure class="hide-sm"><img loading="lazy" src="/assets/residential-4.jpg" alt="屋頂雨水排放" width="200" height="150"></figure>
+        </div>
+
+        <div class="cta">
+          <a class="btn btn-primary" href="/dealers">聯絡我們</a>
+          <a class="btn btn-outline" href="#features">產品介紹</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 民生應用優勢 -->
+  <section id="features" class="section" aria-labelledby="feat-title">
+    <div class="container">
+      <h2 id="feat-title" class="section-title">民生應用優勢</h2>
+      <div class="row cols-3 features">
+        <div class="item card" role="article">
+          <span class="icon">🏠</span>
+          <h3>安全衛生</h3>
+          <p>通過 <strong>NSF</strong> 飲用水認證，不含鉛等重金屬，守護全家人的健康用水。</p>
+        </div>
+        <div class="item card" role="article">
+          <span class="icon">🔧</span>
+          <h3>安裝便利</h3>
+          <p>重量輕、易切割，溶劑膠接工藝簡單快速，大幅縮短施工時間。</p>
+        </div>
+        <div class="item card" role="article">
+          <span class="icon">💰</span>
+          <h3>經濟實惠</h3>
+          <p>材料成本低、安裝費用省、維護簡單，是具高性價比的管路選擇。</p>
+        </div>
+        <div class="item card" role="article">
+          <span class="icon">🌡️</span>
+          <h3>溫度適應</h3>
+          <p>CPVC 耐熱 93°C 適合熱水系統；UPVC 適合冷水與排水，多場景適用。</p>
+        </div>
+        <div class="item card" role="article">
+          <span class="icon">🔇</span>
+          <h3>靜音效果</h3>
+          <p>管壁光滑、流體噪音小，創造安靜舒適的居住環境。</p>
+        </div>
+        <div class="item card" role="article">
+          <span class="icon">⏱️</span>
+          <h3>長期耐用</h3>
+          <p>耐腐蝕、抗老化，合理使用下使用壽命可達 50 年。</p>
+        </div>
+      </div>
+
+      <!-- 內頁圖片展示 -->
+      <div class="row cols-3" style="margin-top:12px;">
+        <div class="card" aria-hidden="true"><img loading="lazy" src="/assets/usecase-kitchen.jpg" alt="廚房給水案例" width="300" height="180"></div>
+        <div class="card" aria-hidden="true"><img loading="lazy" src="/assets/usecase-bath.jpg" alt="衛浴排水案例" width="300" height="180"></div>
+        <div class="card hide-sm" aria-hidden="true"><img loading="lazy" src="/assets/usecase-rooftop.jpg" alt="屋頂排水案例" width="300" height="180"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 應用範圍 Tabs -->
+  <section class="section applications bleed" aria-labelledby="apps-title">
+    <div class="container">
+      <h2 id="apps-title" class="section-title">民生應用範圍</h2>
+
+      <!-- Tabs -->
+      <div class="tabs" role="tablist" aria-label="應用範圍分頁">
+        <button class="tab-btn" role="tab" aria-selected="true" aria-controls="tab-residential" id="tabbtn-residential" data-tab="residential">住宅建築</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-commercial"  id="tabbtn-commercial"  data-tab="commercial">商業建築</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-public"      id="tabbtn-public"      data-tab="public">公共設施</button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-agri"        id="tabbtn-agri"        data-tab="agri">農業應用</button>
+      </div>
+
+      <!-- Panels -->
+      <div id="tab-residential" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-residential" data-active="true">
+        <div class="card app-card"><span class="app-ico">🚿</span><h4>熱水供應系統</h4><p>CPVC 由熱水器至各用水點，耐高溫不變形，確保熱水穩定供應。</p></div>
+        <div class="card app-card"><span class="app-ico">🚰</span><h4>冷水供應系統</h4><p>UPVC 自來水進戶至各點位，管內壁平滑，有助維持水質。</p></div>
+        <div class="card app-card"><span class="app-ico">🚽</span><h4>排水系統</h4><p>浴室、廚房、陽台排水，流量足、阻塞率低。</p></div>
+        <div class="card app-card"><span class="app-ico">🏠</span><h4>屋頂排水</h4><p>雨水排水與立管，耐候性佳，適應台灣氣候變化。</p></div>
+      </div>
+
+      <div id="tab-commercial" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-commercial" data-active="false">
+        <div class="card app-card"><span class="app-ico">🏢</span><h4>辦公大樓</h4><p>中央空調冷卻水、消防噴淋與給排水系統。</p></div>
+        <div class="card app-card"><span class="app-ico">🏨</span><h4>酒店飯店</h4><p>客房熱水、廚務給排水、洗衣房管路。</p></div>
+        <div class="card app-card"><span class="app-ico">🍽️</span><h4>餐飲業</h4><p>廚房供水、油水分離、廢水排放方案。</p></div>
+        <div class="card app-card"><span class="app-ico">🏪</span><h4>商場賣場</h4><p>公共廁所、美食街、環境清潔用水。</p></div>
+      </div>
+
+      <div id="tab-public" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-public" data-active="false">
+        <div class="card app-card"><span class="app-ico">🏥</span><h4>醫療院所</h4><p>純水供應、醫療廢水排放、消毒清洗系統。</p></div>
+        <div class="card app-card"><span class="app-ico">🏫</span><h4>學校機關</h4><p>飲水設備、廁所給排水、實驗室用水。</p></div>
+        <div class="card app-card"><span class="app-ico">🚿</span><h4>運動設施</h4><p>泳池循環、淋浴間、桑拿設施管路。</p></div>
+        <div class="card app-card"><span class="app-ico">🚇</span><h4>交通設施</h4><p>車站廁所、清洗設備、消防管線。</p></div>
+      </div>
+
+      <div id="tab-agri" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-agri" data-active="false">
+        <div class="card app-card"><span class="app-ico">🌱</span><h4>農田灌溉</h4><p>滴灌與噴灌系統，節水高效，助益產量提升。</p></div>
+        <div class="card app-card"><span class="app-ico">🏡</span><h4>溫室農業</h4><p>灌溉與施肥一體化，精準控制環境。</p></div>
+        <div class="card app-card"><span class="app-ico">🐄</span><h4>畜牧業</h4><p>飲水與清洗系統，維護健康環境。</p></div>
+        <div class="card app-card"><span class="app-ico">🌳</span><h4>園藝景觀</h4><p>庭園澆灌、景觀噴泉、自動灌溉。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 選擇嘉澎的理由 -->
+  <section class="section benefits bleed" aria-labelledby="why-title">
+    <div class="container">
+      <h2 id="why-title" class="section-title">選擇嘉澎的理由</h2>
+      <div class="row cols-3">
+        <div class="card benefit-item"><h4>🏆 品質保證</h4><p>20 年專業經驗，服務超過一萬家客戶，口碑信賴。</p></div>
+        <div class="card benefit-item"><h4>🌍 全台服務</h4><p>多倉配與車隊支援，就近快速交付。</p></div>
+        <div class="card benefit-item"><h4>📋 國際認證</h4><p><strong>NSF／UL／WRAS</strong>（依品項）與 <strong>RoHS／REACH</strong> 等合規文件可附。</p></div>
+        <div class="card benefit-item"><h4>🔧 技術支援</h4><p>提供安裝重點與膠接工藝指引，協助現場排疑。</p></div>
+        <div class="card benefit-item"><h4>📦 完整產品線</h4><p>管材／配件／閥件齊備，一站式採購。</p></div>
+        <div class="card benefit-item"><h4>♻️ 環保責任</h4><p>兼顧環境與社會責任，穩健供應。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 簡易安裝步驟 -->
+  <section class="section steps" aria-labelledby="steps-title">
+    <div class="container">
+      <h2 id="steps-title" class="section-title">簡易安裝步驟</h2>
+      <p class="muted" style="text-align:center;margin:-12px 0 24px;">UPVC 溶劑膠接工藝，簡單可靠</p>
+      <div class="row cols-3">
+        <div class="card" style="text-align:center;">
+          <div class="num">1</div><h4>測量切割</h4><p>量測長度，使用鋸具垂直切割。</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="num">2</div><h4>倒角去毛邊</h4><p>倒角並去毛邊，確保插入順暢。</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="num">3</div><h4>塗抹預黏膠</h4><p>軟化接合面，提升膠合效果。</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="num">4</div><h4>塗抹膠水</h4><p>均勻塗佈於管端與配件內壁。</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="num">5</div><h4>插入旋轉</h4><p>迅速插入並旋轉 1/4 圈，確保均勻。</p>
+        </div>
+        <div class="card" style="text-align:center;">
+          <div class="num">6</div><h4>靜置固化</h4><p>維持 15–20 秒不動，約 24 小時後試水。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 客戶見證 -->
+  <section class="section testimonials bleed" aria-labelledby="testi-title">
+    <div class="container">
+      <h2 id="testi-title" class="section-title" style="color:#fff;">客戶見證</h2>
+      <div class="row cols-2">
+        <div class="card testimonial">
+          <p style="font-style:italic;">「我們社區大樓使用嘉澎的 CPVC 熱水管已 8 年，水溫穩定、無漏水，住戶滿意。」</p>
+          <p class="who">— 台中市富貴社區管委會主委</p>
+        </div>
+        <div class="card testimonial">
+          <p style="font-style:italic;">「作為水電師傅，我常推薦嘉澎：品質穩、好安裝、服務也到位，值得信賴。」</p>
+          <p class="who">— 資深水電技師 張師傅</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 依你的要求：不放任何頁尾聯絡區塊（尾頁忽略） -->
+
+</main>
+
+<script>
+/* Tabs：無障礙 + 鍵盤左右切換 */
+(function(){
+  const root   = document.querySelector('.cp-semi');
+  const tabBtns = root.querySelectorAll('.tab-btn');
+  const panels  = root.querySelectorAll('.tab-panel');
+
+  function activate(tabKey){
+    tabBtns.forEach(btn=>{
+      const on = btn.dataset.tab === tabKey;
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      btn.tabIndex = on ? 0 : -1;
+    });
+    panels.forEach(p=>{
+      const on = p.id.endsWith(tabKey);
+      p.dataset.active = on ? 'true' : 'false';
+      p.hidden = !on;
+    });
+  }
+
+  tabBtns.forEach(btn=>{
+    btn.addEventListener('click', (ev)=>{
+      ev.preventDefault();
+      activate(btn.dataset.tab);
+    });
+    btn.addEventListener('keydown', (ev)=>{
+      if(ev.key === 'ArrowRight' || ev.key === 'ArrowLeft'){
+        ev.preventDefault();
+        const list = Array.from(tabBtns);
+        const idx  = list.indexOf(btn);
+        const dir  = ev.key === 'ArrowRight' ? 1 : -1;
+        const next = list[(idx + dir + list.length) % list.length];
+        next.focus();
+        activate(next.dataset.tab);
+      }
+    });
+  });
+
+  const current = root.querySelector('.tab-btn[aria-selected="true"]');
+  activate(current ? current.dataset.tab : 'residential');
+})();
+</script>
+</body>
+</html>

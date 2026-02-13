@@ -1,9 +1,10 @@
 import GhostContentAPI from '@tryghost/content-api';
 
 // Ghost API 連接配置
+// 注意：API 金鑰必須透過環境變數設定，不可硬編碼
 const api = new GhostContentAPI({
   url: process.env.GHOST_API_URL || 'https://iwantyouknow.zeabur.app',
-  key: process.env.GHOST_CONTENT_API_KEY || '429bdfab434c10e7ff5a4374ab',
+  key: process.env.GHOST_CONTENT_API_KEY || '',
   version: 'v5.0'
 });
 

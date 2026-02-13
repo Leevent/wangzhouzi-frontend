@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // 移除 standalone 模式，使用標準 Next.js 啟動
+  // output: 'standalone',
   images: {
     remotePatterns: [
       {

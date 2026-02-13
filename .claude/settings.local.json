@@ -8,7 +8,8 @@
       "Bash(git config:*)",
       "Bash(git remote set-url:*)",
       "Bash(npm run build:*)",
-      "WebFetch(domain:sandbox8.amgserver.com.tw)"
+      "WebFetch(domain:sandbox8.amgserver.com.tw)",
+      "Bash(npx create-next-app@latest:*)"
     ],
     "deny": [],
     "ask": []

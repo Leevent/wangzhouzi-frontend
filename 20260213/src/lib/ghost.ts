@@ -227,6 +227,171 @@ export class GhostService {
       return [];
     }
   }
+
+  // ============================================
+  // 台灣歷史專用方法
+  // ============================================
+
+  // 根據時代獲取資源
+  static async getResourcesByEra(eraSlug: string): Promise<Resource[]> {
+    try {
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter: `tag:era-${eraSlug}+visibility:public`,
+        order: 'published_at DESC'
+      });
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching resources by era:', error);
+      return [];
+    }
+  }
+
+  // 獲取時間軸事件
+  static async getTimelineEvents(): Promise<Resource[]> {
+    try {
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter: 'tag:timeline+visibility:public',
+        order: 'published_at ASC'
+      });
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching timeline events:', error);
+      return [];
+    }
+  }
+
+  // 獲取地方志書
+  static async getGazetteers(region?: string): Promise<Resource[]> {
+    try {
+      const filter = region
+        ? `tag:gazetteer+tag:${region}+visibility:public`
+        : 'tag:gazetteer+visibility:public';
+
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter,
+        order: 'title ASC'
+      });
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching gazetteers:', error);
+      return [];
+    }
+  }
+
+  // 獲取圖庫圖片資源
+  static async getGalleryResources(collection?: string): Promise<Resource[]> {
+    try {
+      const filter = collection
+        ? `tag:gallery+tag:${collection}+visibility:public`
+        : 'tag:gallery+visibility:public';
+
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter,
+        order: 'published_at DESC'
+      });
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching gallery resources:', error);
+      return [];
+    }
+  }
+
+  // 進階搜尋
+  static async advancedSearch(params: {
+    query?: string;
+    era?: string;
+    category?: string;
+    startYear?: number;
+    endYear?: number;
+  }): Promise<Resource[]> {
+    try {
+      const filters: string[] = ['visibility:public'];
+
+      if (params.era) {
+        filters.push(`tag:era-${params.era}`);
+      }
+      if (params.category) {
+        filters.push(`tag:${params.category}`);
+      }
+
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter: filters.join('+'),
+        order: 'published_at DESC'
+      });
+
+      let results = posts as Resource[];
+
+      // 文字搜尋過濾
+      if (params.query) {
+        const lowerQuery = params.query.toLowerCase();
+        results = results.filter(resource =>
+          resource.title.toLowerCase().includes(lowerQuery) ||
+          resource.excerpt.toLowerCase().includes(lowerQuery) ||
+          resource.html.toLowerCase().includes(lowerQuery)
+        );
+      }
+
+      return results;
+    } catch (error) {
+      console.error('Error in advanced search:', error);
+      return [];
+    }
+  }
+
+  // 獲取所有時代標籤
+  static async getAllEras(): Promise<Category[]> {
+    try {
+      const tags = await api.tags.browse({
+        limit: 'all',
+        filter: 'slug:~era-+visibility:public',
+        order: 'name ASC'
+      });
+
+      return tags.map(tag => ({
+        id: tag.id!,
+        name: tag.name!.replace('era-', ''),
+        slug: tag.slug!,
+        description: tag.description || '',
+        count: 0
+      }));
+    } catch (error) {
+      console.error('Error fetching eras:', error);
+      return [];
+    }
+  }
+
+  // 獲取相關資源
+  static async getRelatedResources(slug: string, limit: number = 4): Promise<Resource[]> {
+    try {
+      const currentResource = await this.getResourceBySlug(slug);
+      if (!currentResource) return [];
+
+      const primaryTag = currentResource.primary_tag?.slug;
+      if (!primaryTag) return [];
+
+      const relatedPosts = await api.posts.browse({
+        limit: limit + 1,
+        include: 'tags',
+        filter: `tag:${primaryTag}+visibility:public+slug:-${slug}`,
+        order: 'published_at DESC'
+      });
+
+      return (relatedPosts as Resource[]).slice(0, limit);
+    } catch (error) {
+      console.error('Error fetching related resources:', error);
+      return [];
+    }
+  }
 }
 
 export default api;

@@ -1,13 +1,13 @@
 // 網站全域配置 - 統一管理所有網站資訊
 export const siteConfig = {
   name: '望周知',
-  slogan: '希望每個人都能知道',
-  description: '發掘台灣在地的優質資源與服務！從免費數位圖書館到正規大學課程，從政府便民服務到社會福利資源，讓每個人都能輕鬆享受台灣的優質服務。',
+  slogan: '探索台灣歷史與文化',
+  description: '探索台灣歷史與文化！從史前時代到現代，整合數位典藏、老照片、地方志書等珍貴資源，結合部落格、圖庫、互動式時間軸，讓每個人都能認識台灣的過去與文化。',
   url: 'https://oldcity-frontend.zeabur.app',
   apiUrl: 'https://iwantyouknow.zeabur.app',
 
   // SEO 相關
-  keywords: ['台灣', '資源', '政府服務', '教育', '免費資源', '數位學習', '社會福利'],
+  keywords: ['台灣歷史', '台灣史', '數位典藏', '老照片', '地方志', '原住民族', '日治時期', '清領時期', '歷史文化'],
   author: '望周知團隊',
 
   // 聯絡資訊
@@ -25,18 +25,20 @@ export const siteConfig = {
   navigation: {
     main: [
       { name: '首頁', href: '/' },
-      { name: '所有資源', href: '/resources' },
-      { name: '分類瀏覽', href: '/categories' },
-      { name: '推薦資源', href: '/external-resources' },
-      { name: '關於我們', href: '/about' },
+      { name: '歷史資源', href: '/history-resources' },
+      { name: '時間軸', href: '/timeline' },
+      { name: '圖庫', href: '/gallery' },
+      { name: '地方志', href: '/gazetteers' },
+      { name: '部落格', href: '/blog' },
     ],
     footer: [
-      { name: '所有資源', href: '/resources' },
-      { name: '分類瀏覽', href: '/categories' },
-      { name: '推薦資源', href: '/external-resources' },
+      { name: '歷史資源', href: '/history-resources' },
+      { name: '時間軸', href: '/timeline' },
+      { name: '圖庫', href: '/gallery' },
+      { name: '地方志', href: '/gazetteers' },
       { name: '部落格', href: '/blog' },
       { name: '關於我們', href: '/about' },
-      { name: '使用指南', href: '/guide' },
+      { name: '搜尋', href: '/search' },
     ],
   },
 

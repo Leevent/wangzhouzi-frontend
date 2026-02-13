@@ -1,32 +1,28 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 
-interface BaseButtonProps {
+interface ButtonProps {
+  as?: 'button' | 'link';
+  href?: string;
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
-
-interface ButtonAsButton extends BaseButtonProps, ButtonHTMLAttributes<HTMLButtonElement> {
-  as?: 'button';
-  href?: never;
-}
-
-interface ButtonAsLink extends BaseButtonProps, Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
-  as: 'link';
-  href: string;
-}
-
-type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 export default function Button({
+  as = 'button',
+  href,
   variant = 'primary',
   size = 'md',
   children,
   className,
-  ...props
+  onClick,
+  type = 'button',
+  disabled = false,
 }: ButtonProps) {
   const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors';
 
@@ -42,20 +38,29 @@ export default function Button({
     lg: 'px-8 py-4 text-lg',
   };
 
-  const combinedClassName = cn(baseStyles, variants[variant], sizes[size], className);
+  const combinedClassName = cn(
+    baseStyles,
+    variants[variant],
+    sizes[size],
+    disabled && 'opacity-50 cursor-not-allowed',
+    className
+  );
 
-  if (props.as === 'link') {
-    const { as, href, ...linkProps } = props;
+  if (as === 'link' && href) {
     return (
-      <Link href={href} className={combinedClassName} {...linkProps}>
+      <Link href={href} className={combinedClassName}>
         {children}
       </Link>
     );
   }
 
-  const { as, ...buttonProps } = props as ButtonAsButton;
   return (
-    <button className={combinedClassName} {...buttonProps}>
+    <button
+      type={type}
+      className={combinedClassName}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

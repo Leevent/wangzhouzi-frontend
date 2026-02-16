@@ -85,5 +85,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error('Error generating category sitemap:', error);
   }
 
-  return [...staticPages, ...resourcePages, ...categoryPages];
+  // 動態部落格文章頁面
+  let blogPostPages: MetadataRoute.Sitemap = [];
+  try {
+    const blogPosts = await GhostService.getBlogPosts();
+    blogPostPages = blogPosts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.updated_at || post.published_at),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error('Error generating blog post sitemap:', error);
+  }
+
+  // 動態部落格分類頁面
+  let blogCategoryPages: MetadataRoute.Sitemap = [];
+  try {
+    const blogCategories = await GhostService.getBlogCategories();
+    blogCategoryPages = blogCategories.map((category) => ({
+      url: `${baseUrl}/blog/category/${category.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    }));
+  } catch (error) {
+    console.error('Error generating blog category sitemap:', error);
+  }
+
+  return [...staticPages, ...resourcePages, ...categoryPages, ...blogPostPages, ...blogCategoryPages];
 }

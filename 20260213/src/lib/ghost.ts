@@ -95,18 +95,26 @@ const FALLBACK_CATEGORIES: Category[] = [
   { id: '4', name: '政府服務', slug: 'government-services', description: '政府便民服務', count: 0 }
 ];
 
+// 部落格分類後備資料
+const FALLBACK_BLOG_CATEGORIES: Category[] = [
+  { id: 'b1', name: '教學', slug: 'blog-教學', description: '教學文章與指南', count: 0 },
+  { id: 'b2', name: '心得', slug: 'blog-心得', description: '使用心得與分享', count: 0 },
+  { id: 'b3', name: '新聞', slug: 'blog-新聞', description: '最新消息與動態', count: 0 },
+  { id: 'b4', name: '資源介紹', slug: 'blog-資源介紹', description: '優質資源推薦', count: 0 }
+];
+
 // ============================================
 // Ghost API 服務
 // ============================================
 
 export class GhostService {
-  // 獲取所有資源
+  // 獲取所有資源（排除部落格文章）
   static async getAllResources(): Promise<Resource[]> {
     try {
       const posts = await api.posts.browse({
         limit: 'all',
         include: 'tags',
-        filter: 'visibility:public',
+        filter: 'tag:-hash-blog+visibility:public',
         order: 'published_at DESC'
       });
       return posts as Resource[];
@@ -153,7 +161,7 @@ export class GhostService {
     }
   }
 
-  // 獲取所有分類
+  // 獲取所有資源分類（排除部落格分類）
   static async getAllCategories(): Promise<Category[]> {
     try {
       const tags = await api.tags.browse({
@@ -164,16 +172,19 @@ export class GhostService {
 
       const allResources = await this.getAllResources();
 
-      return tags.map(tag => ({
-        id: tag.id!,
-        name: tag.name!,
-        slug: tag.slug!,
-        description: tag.description || '',
-        count: allResources.filter(resource =>
-          resource.primary_tag?.slug === tag.slug ||
-          resource.tags.some(t => t.slug === tag.slug)
-        ).length
-      }));
+      // 過濾掉 blog 相關的 tag
+      return tags
+        .filter(tag => !tag.slug?.startsWith('blog-') && tag.slug !== 'hash-blog')
+        .map(tag => ({
+          id: tag.id!,
+          name: tag.name!,
+          slug: tag.slug!,
+          description: tag.description || '',
+          count: allResources.filter(resource =>
+            resource.primary_tag?.slug === tag.slug ||
+            resource.tags.some(t => t.slug === tag.slug)
+          ).length
+        }));
     } catch (error) {
       console.error('Error fetching categories:', error);
       return FALLBACK_CATEGORIES;
@@ -213,18 +224,110 @@ export class GhostService {
     }
   }
 
-  // 獲取部落格文章
+  // 獲取所有部落格文章（使用 #blog internal tag）
   static async getBlogPosts(): Promise<Resource[]> {
     try {
       const posts = await api.posts.browse({
         limit: 'all',
         include: 'tags',
-        filter: 'tag:blog+visibility:public',
+        filter: 'tag:hash-blog+visibility:public',
         order: 'published_at DESC'
       });
       return posts as Resource[];
     } catch (error) {
       console.error('Error fetching blog posts:', error);
+      return [];
+    }
+  }
+
+  // 獲取部落格分類
+  static async getBlogCategories(): Promise<Category[]> {
+    try {
+      const tags = await api.tags.browse({
+        limit: 'all',
+        filter: 'visibility:public',
+        order: 'name ASC'
+      });
+
+      const blogPosts = await this.getBlogPosts();
+
+      // 只取 blog- 開頭的 tag
+      return tags
+        .filter(tag => tag.slug?.startsWith('blog-'))
+        .map(tag => ({
+          id: tag.id!,
+          name: tag.name!.replace(/^blog-/, ''), // 移除 blog- 前綴顯示
+          slug: tag.slug!,
+          description: tag.description || '',
+          count: blogPosts.filter(post =>
+            post.tags.some(t => t.slug === tag.slug)
+          ).length
+        }));
+    } catch (error) {
+      console.error('Error fetching blog categories:', error);
+      return FALLBACK_BLOG_CATEGORIES;
+    }
+  }
+
+  // 依分類獲取部落格文章
+  static async getBlogPostsByCategory(categorySlug: string): Promise<Resource[]> {
+    try {
+      const posts = await api.posts.browse({
+        limit: 'all',
+        include: 'tags',
+        filter: `tag:hash-blog+tag:${categorySlug}+visibility:public`,
+        order: 'published_at DESC'
+      });
+      return posts as Resource[];
+    } catch (error) {
+      console.error('Error fetching blog posts by category:', error);
+      // 後備：從所有部落格文章中過濾
+      const allBlogPosts = await this.getBlogPosts();
+      return allBlogPosts.filter(post =>
+        post.tags.some(tag => tag.slug === categorySlug)
+      );
+    }
+  }
+
+  // 獲取單篇部落格文章
+  static async getBlogPostBySlug(slug: string): Promise<Resource | null> {
+    try {
+      const post = await api.posts.read({ slug }, { include: 'tags' });
+      // 確認是部落格文章（有 #blog tag）
+      const resource = post as Resource;
+      const isBlogPost = resource.tags.some(tag => tag.slug === 'hash-blog');
+      return isBlogPost ? resource : null;
+    } catch (error) {
+      console.error('Error fetching blog post:', error);
+      const allBlogPosts = await this.getBlogPosts();
+      return allBlogPosts.find(post => post.slug === slug) || null;
+    }
+  }
+
+  // 獲取相關部落格文章
+  static async getRelatedBlogPosts(slug: string, limit: number = 4): Promise<Resource[]> {
+    try {
+      const currentPost = await this.getBlogPostBySlug(slug);
+      if (!currentPost) return [];
+
+      // 找到部落格分類（blog- 開頭的 tag）
+      const blogCategory = currentPost.tags.find(tag => tag.slug.startsWith('blog-'));
+      if (!blogCategory) {
+        // 沒有分類，返回最新的部落格文章
+        const allBlogPosts = await this.getBlogPosts();
+        return allBlogPosts.filter(post => post.slug !== slug).slice(0, limit);
+      }
+
+      const relatedPosts = await api.posts.browse({
+        limit: limit + 1,
+        include: 'tags',
+        filter: `tag:hash-blog+tag:${blogCategory.slug}+visibility:public+slug:-${slug}`,
+        order: 'published_at DESC'
+      });
+
+      return (relatedPosts as Resource[]).slice(0, limit);
+    } catch (error) {
+      console.error('Error fetching related blog posts:', error);
       return [];
     }
   }

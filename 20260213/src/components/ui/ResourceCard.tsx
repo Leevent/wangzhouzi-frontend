@@ -1,28 +1,43 @@
 import Link from 'next/link';
-import { Resource } from '@/lib/ghost';
-import { getCategoryStyle } from '@/config/categories';
-import { formatDate } from '@/lib/utils';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
+import { getCategoryStyle } from '@/config/categories';
+import { getBlogCategoryStyle } from '@/config/blog-categories';
+import { Resource } from '@/lib/ghost';
+import { formatDate } from '@/lib/utils';
 
 interface ResourceCardProps {
   resource: Resource;
   variant?: 'default' | 'featured' | 'compact';
   showExternalLink?: boolean;
+  type?: 'resource' | 'blog';
+}
+
+function extractExternalUrl(html?: string): string | null {
+  const match = html?.match(/href="(https?:\/\/[^\"]+)"/);
+  return match ? match[1] : null;
 }
 
 export default function ResourceCard({
   resource,
   variant = 'default',
-  showExternalLink = true
+  showExternalLink = true,
+  type = 'resource',
 }: ResourceCardProps) {
-  const category = resource.primary_tag?.name || '預設';
-  const style = getCategoryStyle(category);
+  // 根據類型決定分類和樣式
+  const isBlog = type === 'blog';
 
-  // 從 HTML 中提取外部連結（如果有的話）
-  const extractExternalUrl = (html: string): string | null => {
-    const match = html?.match(/href="(https?:\/\/[^"]+)"/);
-    return match ? match[1] : null;
-  };
+  // 部落格：找 blog- 開頭的 tag；資源：用 primary_tag
+  const blogTag = resource.tags.find(tag => tag.slug.startsWith('blog-'));
+  const category = isBlog
+    ? (blogTag?.name?.replace(/^blog-/, '') || '文章')
+    : (resource.primary_tag?.name || '預設');
+
+  const style = isBlog
+    ? getBlogCategoryStyle(blogTag?.slug || '')
+    : getCategoryStyle(category);
+
+  // 連結路徑
+  const detailPath = isBlog ? `/blog/${resource.slug}` : `/resource/${resource.slug}`;
 
   const externalUrl = extractExternalUrl(resource.html);
 
@@ -46,27 +61,33 @@ export default function ResourceCard({
         </p>
 
         <div className="flex justify-between items-center">
-          <span className="text-xs text-gray-500">
-            {formatDate(resource.published_at)}
-          </span>
+          <span className="text-xs text-gray-500">{formatDate(resource.published_at)}</span>
           <div className="flex items-center gap-2">
             {showExternalLink && externalUrl && (
               <a
                 href={externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-gtm-content-id={resource.slug}
+                data-gtm-content-title={resource.title}
+                data-gtm-link-text={resource.title}
                 className="text-gray-400 hover:text-blue-500 transition-colors"
-                aria-label="前往官網"
-                title="前往官網"
+                aria-label="外部連結"
+                title="外部連結"
               >
                 <ArrowTopRightOnSquareIcon className="h-4 w-4" />
               </a>
             )}
             <Link
-              href={`/resource/${resource.slug}`}
+              href={detailPath}
+              data-gtm-event="select_item"
+              data-gtm-item-id={resource.slug}
+              data-gtm-item-name={resource.title}
+              data-gtm-category={category}
+              data-gtm-list-name={variant}
               className="text-blue-400 hover:text-blue-500 font-medium text-sm"
             >
-              詳情 →
+              查看詳情
             </Link>
           </div>
         </div>
@@ -99,19 +120,27 @@ export default function ResourceCard({
 
           <div className="flex items-center gap-2">
             <Link
-              href={`/resource/${resource.slug}`}
+              href={detailPath}
+              data-gtm-event="select_item"
+              data-gtm-item-id={resource.slug}
+              data-gtm-item-name={resource.title}
+              data-gtm-category={category}
+              data-gtm-list-name={variant}
               className="flex-1 text-center bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors font-medium text-sm"
             >
-              查看詳情
+              閱讀詳情
             </Link>
             {showExternalLink && externalUrl && (
               <a
                 href={externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-gtm-content-id={resource.slug}
+                data-gtm-content-title={resource.title}
+                data-gtm-link-text={resource.title}
                 className="px-3 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-500 transition-colors"
-                aria-label="前往官網"
-                title="前往官網"
+                aria-label="外部連結"
+                title="外部連結"
               >
                 <ArrowTopRightOnSquareIcon className="h-5 w-5" />
               </a>
@@ -122,7 +151,6 @@ export default function ResourceCard({
     );
   }
 
-  // Default variant
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
       <div className="p-5">
@@ -146,24 +174,30 @@ export default function ResourceCard({
         </p>
 
         <div className="flex justify-between items-center">
-          <span className="text-xs text-gray-500">
-            {formatDate(resource.published_at)}
-          </span>
+          <span className="text-xs text-gray-500">{formatDate(resource.published_at)}</span>
           <div className="flex items-center gap-2">
             <Link
-              href={`/resource/${resource.slug}`}
+              href={detailPath}
+              data-gtm-event="select_item"
+              data-gtm-item-id={resource.slug}
+              data-gtm-item-name={resource.title}
+              data-gtm-category={category}
+              data-gtm-list-name={variant}
               className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors font-medium text-sm"
             >
-              查看詳情
+              閱讀詳情
             </Link>
             {showExternalLink && externalUrl && (
               <a
                 href={externalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-gtm-content-id={resource.slug}
+                data-gtm-content-title={resource.title}
+                data-gtm-link-text={resource.title}
                 className="px-3 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-500 transition-colors"
-                aria-label="前往官網"
-                title="前往官網"
+                aria-label="外部連結"
+                title="外部連結"
               >
                 <ArrowTopRightOnSquareIcon className="h-5 w-5" />
               </a>

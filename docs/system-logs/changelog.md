@@ -1,5 +1,74 @@
 # 望周知 - 系統更新日誌
 
+## 2026-02-16 - 部落格多分類功能
+
+### 功能概述
+新增部落格分類系統，使用 Ghost Tag 區分「資源」與「部落格」內容，支援多分類管理。
+
+### Tag 命名規則
+```
+Ghost Tags
+├── 資源分類（不帶前綴）
+│   ├── 數位學習、社會福利、政府服務...
+│
+└── 部落格系統
+    ├── #blog          ← Internal tag（標記為部落格文章）
+    ├── blog-教學       ← 部落格分類
+    ├── blog-心得
+    ├── blog-新聞
+    └── blog-資源介紹
+```
+
+### 新增路由
+| 路由 | 說明 |
+|------|------|
+| `/blog` | 部落格首頁（含分類篩選） |
+| `/blog/[slug]` | 部落格文章詳情頁 |
+| `/blog/category/[slug]` | 部落格分類頁面 |
+
+### 新增檔案
+```
+20260213/src/
+├── app/blog/
+│   ├── [slug]/page.tsx           # 文章詳情頁
+│   └── category/[slug]/page.tsx  # 分類頁面
+├── components/ui/
+│   └── BlogCategoryCard.tsx      # 部落格分類卡片
+├── config/
+│   └── blog-categories.ts        # 分類樣式配置
+└── lib/ghost.ts                  # 新增部落格 API 方法
+```
+
+### GhostService 新增方法
+| 方法 | 說明 |
+|------|------|
+| `getBlogCategories()` | 取得所有部落格分類 |
+| `getBlogPostsByCategory(slug)` | 依分類取得文章 |
+| `getBlogPostBySlug(slug)` | 取得單篇文章 |
+| `getRelatedBlogPosts(slug)` | 取得相關文章 |
+
+### 修改內容
+- `getAllResources()` - 加入 `tag:-hash-blog` 過濾，排除部落格文章
+- `ResourceCard.tsx` - 新增 `type` prop 支援 `'resource' | 'blog'`
+- `/blog/page.tsx` - 加入分類篩選標籤列
+
+### Git Commit
+```
+01f248e feat(blog): 新增部落格多分類功能
+```
+
+### Ghost 後台操作
+1. **建立部落格文章**：Tags 加入 `#blog` + `blog-分類名稱`
+2. **建立資源文章**：Tags 只加資源分類，不加 `#blog`
+
+### 驗證清單
+- [x] Build 成功
+- [x] Git commit & push 完成
+- [ ] Zeabur 部署驗證
+- [ ] Ghost 後台建立測試文章
+
+---
+
 ## 2026-02-13 - SEO 優化與第三方追蹤整合
 
 ### SEO 基礎建設
@@ -202,6 +271,7 @@ NEXT_PUBLIC_GOOGLE_ADS_ID=<待設定>
 
 | 日期 | 版本 | 說明 |
 |------|------|------|
+| 2026-02-16 | v2.2.0 | 部落格多分類功能 |
 | 2026-02-13 | v2.1.0 | SEO 優化、GTM/GA4 整合、社群分享縮圖 |
 | 2026-02-13 | v2.0.0 | 專案重構、架構優化、安全修復 |
 | 2025-09-07 | v1.0.0 | 專案初始化 |
